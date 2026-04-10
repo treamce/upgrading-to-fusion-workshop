@@ -41,6 +41,7 @@ models:
                 pk_table_name: ref('customers')
                 pk_column_name: customer_id
     config:
+      enabled: false
       access: private
       group: finance
       contract:
