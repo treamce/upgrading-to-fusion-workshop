@@ -1,6 +1,6 @@
--- This model demonstrates another PIVOT (ANY) pattern that breaks Fusion introspection
--- Common use case: pivoting payment methods that may change over time
--- Fusion cannot statically determine the resulting column structure
+-- This model demonstrates the explicit PIVOT option for Fusion compatibility.
+-- Payment methods are listed explicitly so Fusion can statically infer
+-- the output schema during compilation.
 
 {{ config(
     materialized='view',
@@ -32,20 +32,18 @@ with monthly_payment_data as (
         end
 ),
 
--- BREAKING: Another PIVOT (ANY) that causes Fusion introspection failure
--- This pattern is common when payment methods are added/removed dynamically
+-- Fusion-safe explicit pivot values 
 monthly_revenue_by_payment_method as (
     select *
     from monthly_payment_data
     PIVOT (
         sum(payment_method_revenue)
-        FOR payment_method IN (ANY)  -- PROBLEMATIC: Dynamic columns break static analysis
+        FOR payment_method IN ('credit_card', 'debit_card', 'paypal')
     ) as pivot_table
 )
 
 select 
-    -- These dynamically generated columns cause introspection errors:
-    -- e.g., CREDIT_CARD_REVENUE, DEBIT_CARD_REVENUE, PAYPAL_REVENUE, etc.
+    -- Deterministic pivoted columns from explicit values above
     *
 from monthly_revenue_by_payment_method
 order by 1
