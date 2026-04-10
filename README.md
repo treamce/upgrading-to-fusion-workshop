@@ -46,3 +46,10 @@ Migrating from dbt Core to dbt Fusion often involves resolving subtle difference
 ---
 
 👉 Ready to go? Clone the repo, create your branch, and start your migration journey.
+
+## Screenshot 1
+Screenshot after running dbt-autofix packages and deprecations 
+![alt text](image.png)
+## Screenshot 2 
+Screenshot after manual fixes 
+![alt text](image-1.png)

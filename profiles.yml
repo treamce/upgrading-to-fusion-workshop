@@ -11,7 +11,7 @@ upgrading_to_fusion:
       
       database: snowflake_learning_db
       warehouse: compute_wh
-      schema: dbt_trouze
+      schema: dbt_treamcelhone
     fusion_dev:
       type: snowflake
       account: "{{ env_var('ACCOUNT') }}"
